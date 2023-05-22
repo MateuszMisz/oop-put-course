@@ -1,0 +1,131 @@
+// inheritance.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
+//
+#include<vector>
+#include <iostream>
+#include<string>
+#include<sstream>
+using namespace std;
+class Main_interface {
+    virtual void New_ID() = 0;
+    virtual string ID() = 0;
+};
+class Product_interface :Main_interface {
+    virtual float Price() = 0;
+    virtual string Name() = 0;
+};
+class Customer_interface :Main_interface {
+    virtual string Email() = 0;
+    virtual string Name() = 0;
+};
+class Product :Product_interface{
+    string name;
+    float price;
+    string id;
+public:
+    static int Last_ID;
+
+    Product(string name, float price)
+    {
+        this->name = name;
+        this->price = price;
+        New_ID();
+    }
+    float Price() override { return price; }
+    string Name()override { return name; }
+    string ID() override {return id;}
+    void New_ID() override {
+        int number = ++Last_ID;
+        string s = to_string(number);
+        
+        id = "P" + number;
+    }
+};
+int Product::Last_ID = 0;
+
+class Customer :Customer_interface{
+    string name;
+    string email;
+    string id;
+    
+    void New_ID() override {
+        int number = ++Last_ID;
+        string s = to_string(number);
+
+        id = "C" + number;
+    }
+public:
+    static int Last_ID;
+    Customer(string name, string email) {
+        this->name = name;
+        this->email = email;
+        New_ID();
+    }
+    string Name() override { return name; }
+    string Email()override { return email; }
+    string ID()override { return id; }
+    
+
+};
+int Customer::Last_ID = 0;
+class Order:Main_interface {
+    virtual void Add(Product* new_product) = 0;
+    virtual void Total_Cost() = 0;
+    
+
+};
+class Normal_Order : Order{
+    Customer* customer;
+    vector<Product*> products;
+    string id;
+    
+    void New_ID() override {
+        int number = ++Last_ID;
+        string s = to_string(number);
+
+        id = "O" + number;
+    }
+public:
+    static int Last_ID;
+    Normal_Order(Customer* customer) {
+        this->customer = customer;
+        New_ID();
+    }
+    
+
+    void Add(Product* new_product) override {
+       products.push_back(new_product);
+    }
+    void Total_Cost()override {
+        float sum = 0;
+        for (Product* product : products)
+        {
+            sum += product->Price();
+        }
+        cout << customer->Name() << "'s order total cost: " << sum;
+    }
+    std::string ID() { return id; }
+
+};
+int Normal_Order::Last_ID = 0;
+int main()
+{
+    Product product1("table", 100);
+    Product product2("smartphone", 1000);
+    Customer customer1("Mark", "mark@gmail.com");
+    Normal_Order order1(&customer1);
+    order1.Add(&product1);
+    order1.Add(&product2);
+    order1.Total_Cost();
+
+}
+
+// Uruchomienie programu: Ctrl + F5 lub menu Debugowanie > Uruchom bez debugowania
+// Debugowanie programu: F5 lub menu Debugowanie > Rozpocznij debugowanie
+
+// Porady dotyczące rozpoczynania pracy:
+//   1. Użyj okna Eksploratora rozwiązań, aby dodać pliki i zarządzać nimi
+//   2. Użyj okna programu Team Explorer, aby nawiązać połączenie z kontrolą źródła
+//   3. Użyj okna Dane wyjściowe, aby sprawdzić dane wyjściowe kompilacji i inne komunikaty
+//   4. Użyj okna Lista błędów, aby zobaczyć błędy
+//   5. Wybierz pozycję Projekt > Dodaj nowy element, aby utworzyć nowe pliki kodu, lub wybierz pozycję Projekt > Dodaj istniejący element, aby dodać istniejące pliku kodu do projektu
+//   6. Aby w przyszłości ponownie otworzyć ten projekt, przejdź do pozycji Plik > Otwórz > Projekt i wybierz plik sln
