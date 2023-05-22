@@ -1,0 +1,69 @@
+// decorator.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
+//
+#include<vector>
+#include <iostream>
+#include<algorithm>
+using namespace std;
+class IntegerSequence {
+public:
+    virtual vector<int> Numbers()=0;
+};
+class PositiveSequence :public IntegerSequence{
+    vector<int>numbers;
+public:
+    PositiveSequence(vector<int> nr) {
+        numbers = nr;      
+    }
+    vector<int> Numbers() override{
+        for (int i = 0; i < numbers.size(); i++)
+        {
+            if (numbers[i] < 0)
+                numbers.erase(numbers.begin() + i);
+        }
+        return numbers;
+    }
+
+};
+class EvenSequence:public IntegerSequence{
+    IntegerSequence* seq;
+public:
+    EvenSequence(IntegerSequence* number) :seq(number) {}
+    vector<int>Numbers()override {
+        vector<int> numbers=seq->Numbers();
+        for (int i = 0; i < numbers.size(); i++)
+        {
+            if (numbers[i] % 2 != 0)
+                numbers.erase(numbers.begin() + i);
+        }
+        return numbers;
+    }
+};
+class SortedSequence :public IntegerSequence {
+    IntegerSequence* seq;
+public:
+    SortedSequence(IntegerSequence* sequence) :seq(sequence) {}
+    vector<int> Numbers()override {
+        vector<int>numbers = seq->Numbers();
+        sort(numbers.begin(), numbers.end());
+        return numbers;
+    }
+};
+int main()
+{
+    vector<int> sequence{ -3,2,4,-6,10,1,5,12,8 };
+    IntegerSequence* seq = new EvenSequence(new SortedSequence(new PositiveSequence(sequence)));
+    
+    for (int x : seq->Numbers())
+        cout << x<<' ';
+}
+
+// Uruchomienie programu: Ctrl + F5 lub menu Debugowanie > Uruchom bez debugowania
+// Debugowanie programu: F5 lub menu Debugowanie > Rozpocznij debugowanie
+
+// Porady dotyczące rozpoczynania pracy:
+//   1. Użyj okna Eksploratora rozwiązań, aby dodać pliki i zarządzać nimi
+//   2. Użyj okna programu Team Explorer, aby nawiązać połączenie z kontrolą źródła
+//   3. Użyj okna Dane wyjściowe, aby sprawdzić dane wyjściowe kompilacji i inne komunikaty
+//   4. Użyj okna Lista błędów, aby zobaczyć błędy
+//   5. Wybierz pozycję Projekt > Dodaj nowy element, aby utworzyć nowe pliki kodu, lub wybierz pozycję Projekt > Dodaj istniejący element, aby dodać istniejące pliku kodu do projektu
+//   6. Aby w przyszłości ponownie otworzyć ten projekt, przejdź do pozycji Plik > Otwórz > Projekt i wybierz plik sln
