@@ -1,0 +1,11 @@
+C:/Users/mysza/Documents/OOP-Project-Calc/out/build/x64-debug/CMakeFiles/edit_cache.dir
+C:/Users/mysza/Documents/OOP-Project-Calc/out/build/x64-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/mysza/Documents/OOP-Project-Calc/out/build/x64-debug/CMakeFiles/list_install_components.dir
+C:/Users/mysza/Documents/OOP-Project-Calc/out/build/x64-debug/CMakeFiles/install.dir
+C:/Users/mysza/Documents/OOP-Project-Calc/out/build/x64-debug/CMakeFiles/install/local.dir
+C:/Users/mysza/Documents/OOP-Project-Calc/out/build/x64-debug/src/CMakeFiles/OOP-Project-Calc.dir
+C:/Users/mysza/Documents/OOP-Project-Calc/out/build/x64-debug/src/CMakeFiles/edit_cache.dir
+C:/Users/mysza/Documents/OOP-Project-Calc/out/build/x64-debug/src/CMakeFiles/rebuild_cache.dir
+C:/Users/mysza/Documents/OOP-Project-Calc/out/build/x64-debug/src/CMakeFiles/list_install_components.dir
+C:/Users/mysza/Documents/OOP-Project-Calc/out/build/x64-debug/src/CMakeFiles/install.dir
+C:/Users/mysza/Documents/OOP-Project-Calc/out/build/x64-debug/src/CMakeFiles/install/local.dir
