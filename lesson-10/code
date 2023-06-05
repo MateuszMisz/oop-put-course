@@ -1,0 +1,53 @@
+#include<thread>
+#include <iostream>
+#include<mutex>
+#include<vector>
+#define MAX 10
+using namespace std;
+mutex mtx;
+int A = 0;
+int C = 0;
+int G = 0;
+int T = 0;
+void Frequency(string seq, int start, int end) {
+	unique_lock<mutex>lock(mtx);
+
+	for (int i = start; i <= end; i++)
+	{
+		if (seq[i] == 'A')
+			A++;
+		if (seq[i] == 'C')
+			C++;
+		if (seq[i] == 'G')
+			G++;
+		if (seq[i] == 'T')
+			T++;
+	}
+	lock.unlock();
+}
+int main()
+{
+	string seq;
+	cin >> seq;
+	vector<thread> threads;
+	for (int i = 0; i < seq.size(); i += MAX)
+	{
+		if (i + MAX > seq.size())
+			threads.emplace_back(Frequency,seq, i, seq.size() - 1);
+		else
+			threads.emplace_back(Frequency,seq, i, i + MAX - 1);
+	}
+	for (auto& t : threads)
+	{
+		t.join();
+	}
+
+	double A_frequency = (double)A / seq.size();
+	double C_frequency = (double)C / seq.size();
+	double T_frequency = (double)T / seq.size();
+	double G_frequency = (double)G / seq.size();
+	cout << "A=" << A_frequency << endl;
+	cout << "C=" << C_frequency << endl;
+	cout << "T=" << T_frequency << endl;
+	cout << "G=" << G_frequency << endl;
+}
